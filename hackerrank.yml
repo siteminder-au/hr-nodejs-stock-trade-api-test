@@ -1,0 +1,18 @@
+---
+version: 1.0
+configuration:
+  has_webserver: true
+  readonly_paths:
+    - test/*
+    - config.json
+  scoring:
+    command: npm test
+    files:
+    - unit.xml
+  ide_config:
+    default_open_files:
+    - "app.js"
+    project_menu:
+      run: npm start
+      install: npm install
+      test: npm test
