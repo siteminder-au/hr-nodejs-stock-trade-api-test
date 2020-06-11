@@ -1,29 +1,47 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var server = require('../app');
-var should = chai.should();
-var expect = chai.expect;
+import * as chai from 'chai'
+import * as Promise from 'bluebird';
+import * as chaiAsPromised from "chai-as-promised";
+import * as fs from 'fs';
+import * as path from 'path';
+import chaiHttp = require('chai-http');
+
+import server from '../src/app'
+
+const should = chai.should();
+const expect = chai.expect;
+
 chai.use(chaiHttp);
-var Promise = require("bluebird");
-var chaiAsPromised = require("chai-as-promised");
+
+
 chai.use(chaiAsPromised);
-const fs = require('fs');
-const path = require('path');
-const dir = './test/data/';
-const testFolder = './test/data';
-let testCaseNames = fs.readFileSync(dir + 'description.txt', 'utf8').toString().split('\n');
+
+console.log("Directory name is", __dirname);
+
+const testCaseNames = fs.readFileSync(
+	path.resolve(__dirname, "data", "description.txt"),
+	'utf8').toString().split('\n');
 
 
 describe('trades_test ', function() {
 	this.timeout(120*1000);
 
 	let id = 0;
-	fs.readdirSync(testFolder).sort().forEach(file => {
+	fs.readdirSync(
+		path.resolve(__dirname, "data")
+	)
+	.sort()
+	.forEach(file => {
 		if (file[0] != '.' && file != 'description.txt') {
 			it(testCaseNames[id], (done) => {
 				let i = 0;
-				let event = [];
-				fs.readFileSync(dir + file, 'utf8').toString().split('\n').forEach(function (line) {
+				let event: any[] = [];
+				fs.readFileSync(
+					path.resolve(__dirname, "data", file),
+					'utf8'
+				)
+				.toString()
+				.split('\n')
+				.forEach(function (line: any) {
 					i += 1;
 					if (line) {
 						event.push(line);
