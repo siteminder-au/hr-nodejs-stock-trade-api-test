@@ -11,7 +11,7 @@ configuration:
     - unit.xml
   ide_config:
     default_open_files:
-    - "app.js"
+    - "src/app.ts"
     project_menu:
       run: npm start
       install: npm install
